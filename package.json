@@ -1,0 +1,26 @@
+{
+  "name": "unnamed-ads-engine",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "onboard": "node worker/onboard.js",
+    "monitor": "node worker/monitor.js",
+    "plan": "node worker/decide.js",
+    "learn": "node learn/ingest.js",
+    "collect": "node collectors/run-all.js",
+    "notify": "node worker/notify.js",
+    "execute": "node worker/execute.js",
+    "env": "node worker/env.js",
+    "test": "node test/smoke.js",
+    "plan": "node worker/decide.js",
+    "discover": "node collectors/operators.js",
+    "index": "node collectors/market-index.js",
+    "intake": "node intake/from-brand.js",
+    "baselines": "node worker/baselines.js",
+    "strategy": "node strategy/build.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "yaml": "^2.9.1"
+  }
+}

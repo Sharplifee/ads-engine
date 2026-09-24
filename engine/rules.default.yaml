@@ -1,0 +1,66 @@
+# Defaults. Onboarding overwrites any value marked derive: true with the account's own history.
+guardrails:
+  alert_cooldown_hours: 12               # the same alert does not re-fire inside this
+  timezone: America/Denver               # all day boundaries and "yesterday" use this
+  learning_phase_cooldown_hours: 24      # no budget/audience change to the same entity inside this
+  max_budget_step_pct: 20                # scale in small steps
+  max_scale_events_per_day: 1
+  never_touch_entities_younger_than_hours: 48
+  all_creation_lands_paused: true        # Meta's connector enforces this anyway
+kill:
+  - id: spend_no_result
+    when: "spend >= 3 * target_cost_per_result AND results == 0"
+    window: rolling_72h
+    action: pause_ad
+    severity: high
+  - id: cost_blowout
+    when: "results >= 3 AND cost_per_result > 2 * target_cost_per_result"
+    window: rolling_7d
+    action: pause_ad
+    severity: high
+  - id: dead_delivery
+    when: "impressions == 0 AND status == ACTIVE"
+    window: rolling_24h
+    action: alert_only
+    severity: medium
+fatigue:
+  - id: frequency_decay
+    when: "frequency > 2.5 AND ctr_week_over_week_down_2_consecutive"
+    window: rolling_21d
+    action: propose_refresh
+    severity: medium
+anomaly:
+  - id: two_sigma_move
+    when: "abs(metric - baseline_mean) > 2 * baseline_stddev"
+    metrics: [spend, cpm, ctr, cost_per_result, results]
+    baselines: [3d, 7d, 14d]
+    both_directions: true              # good anomalies matter as much as bad ones
+    action: alert_only
+  - id: pacing
+    when: "projected_month_spend > monthly_budget * 1.1"
+    action: alert_only
+winner:
+  - id: proven_winner
+    when: "share_of_campaign_spend > 0.05 AND cost_per_result < target_cost_per_result"
+    windows: [3d, 7d, 14d]             # must hold in at least 2 of 3
+    action: propose_scale
+  - id: potential_winner
+    when: "one_of(share_of_campaign_spend > 0.05, cost_per_result < target_cost_per_result)"
+    action: propose_variations
+funnel_break:
+  # Where the break is, in order. First failing stage wins.
+  - stage: attention
+    signal: "ctr < 0.5 * account_baseline_ctr"
+    verdict: "Creative isn't earning the click — hook problem."
+  - stage: click_to_land
+    signal: "landing_page_views < 0.7 * link_clicks"
+    verdict: "Clicks aren't landing — page speed or broken link."
+  - stage: landing_to_action
+    signal: "results < 0.02 * landing_page_views"
+    verdict: "Page or form is the problem, not the ad."
+  - stage: cost
+    signal: "cpm > 1.5 * account_baseline_cpm"
+    verdict: "Auction cost, not creative — audience too narrow or too much overlap."
+  - stage: quality
+    signal: "results_good < 0.3 * results"
+    verdict: "Volume is fine, lead quality isn't — tighten targeting or the offer."

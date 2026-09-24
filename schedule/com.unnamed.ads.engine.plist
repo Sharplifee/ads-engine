@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mac scheduler. Load once: launchctl load -w ~/Library/LaunchAgents/com.unnamed.ads.engine.plist
+     Runs the whole loop hourly; the runner itself decides which jobs are due. -->
+<plist version="1.0"><dict>
+  <key>Label</key><string>com.unnamed.ads.engine</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string><string>-lc</string>
+    <string>cd /Users/connorsharp/unnamed &amp;&amp; /usr/local/bin/node collectors/run-all.js &gt;&gt; logs/engine.log 2&gt;&amp;1</string>
+  </array>
+  <key>StartInterval</key><integer>3600</integer>
+  <key>RunAtLoad</key><true/>
+  <key>StandardErrorPath</key><string>/Users/connorsharp/unnamed/logs/engine.err</string>
+</dict></plist>

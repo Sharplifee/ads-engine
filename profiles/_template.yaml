@@ -1,0 +1,41 @@
+# The only per-client file. Everything else in the repo is shared.
+slug: acme
+display_name: Acme Co
+ad_account_id: "1234567890"          # numeric, no act_ prefix
+business_model: lead_gen             # lead_gen | one_time_sale | subscription | appointment | high_ticket | app_install
+data_mode: blended                   # cold (no history) | fresh (ignore history on purpose) | blended
+primary_result: lead                 # lead | purchase | appointment | install
+goal:
+  target_cost_per_result: null       # null = derive from account history at onboarding
+  target_roas: null                  # ecommerce only
+  daily_spend_ceiling: null          # hard cap across the account, USD
+  monthly_budget: null
+market:
+  service_area: []                   # e.g. ["Utah County, UT", "Salt Lake County, UT"]
+  country: US
+  category: ""                       # what to search competitors by, e.g. "lawn care"
+  competitor_terms: []               # optional: name specific rivals
+  competitor_limit: 100
+  language: en
+offer:
+  headline_offer: ""                 # what the ad promises
+  price_point: ""
+  proof: []                          # reviews, guarantees, years in business
+audience_notes: ""
+economics:                           # the cold-start engine: what a customer is worth
+  gross_margin_pct: 0.5
+  close_rate: null                   # leads that become customers, if known
+  repeat_purchases: 1                # lifetime multiple, if known
+creative:
+  naming_convention: "{service}_{angle}_{format}_{version}"
+  allowed_formats: [image, video, carousel]
+  ai_imagery_of_product_allowed: false   # keep false for service businesses
+downstream:
+  crm: none                          # none | supabase | webhook
+  crm_config: {}                     # supabase: {table, id_field, created_field, stage_field,
+                                     #            won_values: [], value_field, ad_field}
+  counts_as_good_lead: ""            # define it in one sentence
+autonomy:
+  auto_pause: true                   # killing is safe
+  auto_scale: false                  # scaling needs approval until trust is earned
+  max_changes_per_entity_per_day: 1

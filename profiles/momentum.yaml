@@ -1,0 +1,40 @@
+slug: momentum
+display_name: Momentum Landscaping
+ad_account_id: "2250835595733892"
+channel: meta
+business_model: subscription
+primary_result: lead
+data_mode: blended
+goal:
+  target_cost_per_result: null
+  daily_spend_ceiling: null
+  monthly_budget: null
+market:
+  service_area: ["Utah County, UT"]
+  country: US
+  category: lawn care
+  vertical: home_services
+  competitor_terms: ["lawn care", "landscaping", "lawn mowing service"]
+  competitor_limit: 50
+  language: en
+offer:
+  headline_offer: ""
+  price_point: ""
+  proof: []
+audience_notes: ""
+economics:
+  gross_margin_pct: 0.5
+  close_rate: null
+  repeat_purchases: 1
+creative:
+  naming_convention: "{service}_{angle}_{format}_{version}"
+  allowed_formats: [image, video, carousel]
+  ai_imagery_of_product_allowed: false
+downstream:
+  crm: none
+  crm_config: {}
+  counts_as_good_lead: ""
+autonomy:
+  auto_pause: false
+  auto_scale: false
+  max_changes_per_entity_per_day: 1

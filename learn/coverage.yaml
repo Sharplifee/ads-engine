@@ -1,0 +1,55 @@
+# The engine does not follow a fixed list of people. It covers the MARKET, segment by
+# segment, and refreshes constantly. Anyone publishing something that works shows up
+# on their own. The named operators below are a floor, not the scope.
+
+segments:                     # how money is actually made — the engine tracks each separately
+  subscription:   ["subscription", "membership", "recurring plan", "monthly plan", "retainer"]
+  one_time_sale:  ["one time purchase", "ecommerce product", "dtc product", "online store"]
+  lead_gen:       ["lead generation", "free quote", "free estimate", "book a consult"]
+  appointment:    ["book appointment", "schedule a visit", "calendar booking"]
+  high_ticket:    ["high ticket", "premium service", "enterprise deal"]
+  app_install:    ["app install", "mobile app growth", "in-app purchase"]
+
+formats:          [short_form_video, long_form_video, ugc_video, static_image, carousel, collection, story, reel]
+placements:       [feed, reels, stories, marketplace, audience_network, search, shorts, tiktok, youtube]
+
+verticals:        # broad on purpose — the engine notices which ones behave alike
+  - home_services
+  - health_and_fitness
+  - real_estate
+  - ecommerce_physical
+  - software_saas
+  - education_courses
+  - finance_insurance
+  - automotive
+  - local_retail
+  - professional_services
+
+query_templates:  # combined with segment, format, vertical and the current month
+  - "{segment} ads what's working {month} {year}"
+  - "{vertical} {segment} ad creative that converts {year}"
+  - "{format} ads performance {segment} {month} {year}"
+  - "meta ads {vertical} case study cost per result {year}"
+  - "what ad format is winning right now {vertical}"
+  - "{segment} customer acquisition cost benchmark {year}"
+  - "ad creative trends {month} {year}"
+  - "winning hooks {vertical} ads {year}"
+
+operators:        # a floor, never the ceiling — discovery finds the rest on its own
+  - Sam Piliero
+  - Justin Lalonde
+  - Chris Rudy
+  - Chase Chappell
+  - Ben Heath
+  - Leo Moore
+  - TripleDart
+
+cadence:
+  discovery: daily            # new material every day, not weekly
+  market_index: daily         # the "what is working right now" picture
+  competitor_sample: weekly   # a fresh cut of live ads per segment and vertical
+  rotation: 12                # queries rotate so coverage spreads instead of repeating
+
+promotion_rule: >
+  A claim becomes adopted after it is proven on a live account OR three independent
+  operators state it. Anything else stays a candidate, visible but clearly untested.
