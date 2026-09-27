@@ -23,10 +23,16 @@ export function currentQueries({ rotation = cov.cadence?.rotation || 12, seed = 
                .replace('{format}', formats[out.length % formats.length])
                .replace('{month}', month).replace('{year}', year)
         });
+  // Templates that mention no segment or vertical produce the same sentence dozens
+  // of times over. Left in, they filled the daily slice with duplicates and the
+  // rotation never actually moved. Keep one of each distinct question.
+  const seen = new Set();
+  const unique = out.filter(o => !seen.has(o.q) && seen.add(o.q));
+
   // Day-of-year rotation: a different slice every day, whole map covered over time.
   const day = Math.floor((seed - new Date(seed.getFullYear(), 0, 0)) / 864e5);
-  const start = (day * rotation) % out.length;
-  return [...out.slice(start), ...out.slice(0, start)].slice(0, rotation);
+  const start = (day * rotation) % unique.length;
+  return [...unique.slice(start), ...unique.slice(0, start)].slice(0, rotation);
 }
 
 export const segments = () => Object.keys(cov.segments || {});

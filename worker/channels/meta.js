@@ -113,3 +113,28 @@ export async function searchLibrary({ terms, country = 'US', limit = 50 }) {
     ad_type: 'ALL', ad_active_status: 'ACTIVE', limit,
     fields: 'id,page_name,ad_creative_bodies,ad_delivery_start_time,publisher_platforms' });
 }
+
+// Where the money is actually pointed. Read at the ad set level, because that is
+// where geography lives on this platform.
+export async function pullTargeting(accountId) {
+  const acct = String(accountId).startsWith('act_') ? accountId : `act_${accountId}`;
+  const out = [];
+  let after = null;
+  do {
+    const page = await get(`${acct}/adsets`, {
+      fields: 'id,name,effective_status,campaign{id,name},targeting{geo_locations,excluded_geo_locations,age_min,age_max}',
+      limit: 100, ...(after ? { after } : {})
+    });
+    for (const a of page.data || []) {
+      const t = a.targeting || {};
+      out.push({
+        entity_id: a.id, level: 'adset', name: a.name, status: a.effective_status,
+        campaign_id: a.campaign?.id || null, campaign_name: a.campaign?.name || null,
+        geo_locations: t.geo_locations || {}, excluded_geo_locations: t.excluded_geo_locations || null,
+        age_min: t.age_min ?? null, age_max: t.age_max ?? null
+      });
+    }
+    after = page.paging?.cursors?.after && page.paging?.next ? page.paging.cursors.after : null;
+  } while (after);
+  return out;
+}

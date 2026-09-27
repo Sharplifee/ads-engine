@@ -10,6 +10,7 @@ import { runProfile } from '../worker/monitor.js';
 import { rebuildMarketIndex } from './market-index.js';
 import { readFormatMix } from './formats.js';
 import { checkLanding } from './landing.js';
+import { auditGeo } from './geo-audit.js';
 import { resolveBaselines } from '../worker/baselines.js';
 import { buildPlan } from '../worker/decide.js';
 import { sendPending } from '../worker/notify.js';
@@ -21,7 +22,7 @@ import { loadEnv, capabilities } from '../worker/env.js';
 const SCHEDULE = {
   account: 'hourly', outcomes: 'hourly', notify: 'hourly', execute: 'hourly',
   tag_rivals: 'daily',
-  operators: 'daily', market_index: 'daily', demand: 'daily', landing: 'daily',
+  operators: 'daily', market_index: 'daily', demand: 'daily', landing: 'daily', geo: 'daily',
   baselines: 'daily', formats: 'daily', plan: 'daily',
   competitors: 'weekly', policy: 'weekly'
 };
@@ -63,6 +64,7 @@ export async function runAll({ only, force = false } = {}) {
       ['outcomes', () => pullOutcomes(profile)],
       ['formats', () => readFormatMix(profile)],
       ['landing', () => checkLanding(profile)],
+      ['geo', () => auditGeo(profile)],
       ['baselines', () => resolveBaselines(profile)],
       ['plan', () => buildPlan(profile)]
     ];

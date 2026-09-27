@@ -3,6 +3,7 @@ import { evaluate, funnelBreak, stats } from '../worker/rules.js';
 import { affordableCostPerResult } from '../worker/baselines.js';
 import { currentQueries, segments } from '../discovery/queries.js';
 import { dueNow, localHour } from '../collectors/run-all.js';
+import { compareGeo, readGeo, milesToKm, kmToMiles } from '../worker/geo.js';
 import { readFileSync } from 'node:fs';
 import YAML from 'yaml';
 
@@ -63,6 +64,35 @@ ok('rotates searches day to day',
 // scheduling honours the configured timezone
 ok('hourly jobs always run', dueNow('hourly'));
 ok('day boundary is local, not UTC', localHour('America/Denver') !== localHour('UTC') || true);
+
+// geography — the wrong-place class of error
+const slc = { zips: ['84020', '84095'], location_types: ['home'] };
+const liveSlc = readGeo({ zips: [{ name: '84020' }, { name: '84095' }], location_types: ['home'] });
+is('says nothing is wrong when the map matches',
+   compareGeo({ intended: slc, live: liveSlc, rules }).problems.length, 0);
+
+const liveWrongState = readGeo({ zips: [{ name: '90210' }], location_types: ['home'] });
+ok('catches ads running in the wrong place entirely',
+   compareGeo({ intended: slc, live: liveWrongState, rules }).problems.some(p => p.kind === 'wrong_area'));
+
+ok('catches a whole-country buy',
+   compareGeo({ intended: slc, live: readGeo({ countries: ['US'] }), rules }).problems.some(p => p.kind === 'country_wide'));
+
+const liveWide = readGeo({ zips: [{ name: '84020' }, { name: '84095' }],
+  cities: [{ key: 'US:1', name: 'Draper', radius: 80, distance_unit: 'kilometer' }], location_types: ['home'] });
+ok('catches a radius wider than the cap',
+   compareGeo({ intended: slc, live: liveWide, rules: rules.guardrails }).problems.some(p => p.kind === 'radius_too_wide'));
+
+ok('catches targeting visitors instead of residents',
+   compareGeo({ intended: slc, live: readGeo({ zips: [{ name: '84020' }], location_types: ['recent'] }), rules })
+     .problems.some(p => p.kind === 'not_residents'));
+
+ok('spots spend leaking outside the service area',
+   compareGeo({ intended: slc, live: readGeo({ zips: [{ name: '84020' }, { name: '84095' }, { name: '84604' }],
+     location_types: ['home'] }), rules }).problems.some(p => p.kind === 'outside_area'));
+
+is('converts miles to kilometers for the platform', milesToKm(10), 16);
+is('reads kilometers back as miles', kmToMiles(16), 10);
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

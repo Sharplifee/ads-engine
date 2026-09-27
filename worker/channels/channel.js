@@ -8,6 +8,7 @@
 //   getEntity(entityId, fields)       -> current state, read before every write
 //   createDraft(spec)                -> {ok, ids}   // must land paused
 //   searchLibrary(query)             -> [{advertiser, body, format, first_seen, days_running}]
+//   pullTargeting(accountId)         -> [{entity_id, name, status, geo_locations, excluded_geo_locations}]
 // A channel that cannot do one of these exports it as unsupported() so the engine
 // degrades honestly instead of pretending.
 export function unsupported(name) {

@@ -1,5 +1,7 @@
 # Defaults. Onboarding overwrites any value marked derive: true with the account's own history.
 guardrails:
+  geo_max_radius_miles: 30               # wider than this and a local business is paying for strangers
+  geo_require_home_only: true            # people who live there, not people who passed through
   alert_cooldown_hours: 12               # the same alert does not re-fire inside this
   timezone: America/Denver               # all day boundaries and "yesterday" use this
   learning_phase_cooldown_hours: 24      # no budget/audience change to the same entity inside this

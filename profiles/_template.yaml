@@ -11,7 +11,13 @@ goal:
   daily_spend_ceiling: null          # hard cap across the account, USD
   monthly_budget: null
 market:
-  service_area: []                   # e.g. ["Utah County, UT", "Salt Lake County, UT"]
+  service_area: []                   # plain words, used for weather and seasonality
+  geo:                               # what the ads must actually target, and what gets audited
+    zips: []                         # e.g. ["84020", "84095"] — the most precise option
+    cities: []                       # e.g. [{name: "Draper, Utah", radius_miles: 10}]
+    regions: []                      # e.g. ["Utah"] — whole states, use sparingly
+    location_types: [home]           # home = people who live there. Add "recent" only on purpose
+    exclude: []                      # places to keep out even if inside the above
   country: US
   category: ""                       # what to search competitors by, e.g. "lawn care"
   competitor_terms: []               # optional: name specific rivals

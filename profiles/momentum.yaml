@@ -10,7 +10,16 @@ goal:
   daily_spend_ceiling: null
   monthly_budget: null
 market:
-  service_area: ["Utah County, UT"]
+  # Corrected from the live account: every ad set targets the Salt Lake County
+  # south valley, not Utah County. Weather and seasonality follow the same map.
+  service_area: ["Draper, UT", "Riverton, UT", "Sandy, UT"]
+  geo:
+    zips: ["84006","84009","84020","84047","84065","84070","84081","84084",
+           "84088","84092","84093","84094","84095","84096","84121"]
+    cities: []
+    regions: []
+    location_types: [home]
+    exclude: []
   country: US
   category: lawn care
   vertical: home_services
