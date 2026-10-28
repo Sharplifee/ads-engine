@@ -1,3 +1,4 @@
+import './eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // THE MISSING HAND — approved actions were being written and never applied.
 // This takes actions a human approved and carries them out, with every guardrail
 // checked at the moment of execution, not just when the action was proposed.

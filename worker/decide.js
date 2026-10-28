@@ -1,3 +1,4 @@
+import './eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // Decision layer. Turns everything the engine knows into one plan for one account:
 // what is happening, the single biggest constraint, and the ordered moves.
 // It writes plans and creative briefs. It never executes anything.

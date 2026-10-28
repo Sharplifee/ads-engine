@@ -1,3 +1,4 @@
+import '../worker/eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // THE LIVE PICTURE — "what is working right now", by how the money is made and by
 // format. Rebuilt daily from three independent angles so no single one can mislead:
 //   survival  — how long live ads in this segment keep running (market vote)

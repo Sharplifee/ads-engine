@@ -1,3 +1,4 @@
+import './eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // WHERE THE NUMBERS COME FROM — the engine never refuses to work for lack of data.
 // Three modes, set per profile:
 //   cold    — no account history at all (new business, or a brand new account)

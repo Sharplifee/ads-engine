@@ -1,3 +1,4 @@
+import '../worker/eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // Self-updating playbook. Turns anything the engine discovered — video, podcast or
 // article — into specific testable claims, tagged by how the money is made so the
 // index can tell subscription advice apart from one-time-sale advice.

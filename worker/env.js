@@ -1,3 +1,4 @@
+import './eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // Loads .env so every entry point behaves the same, and fails loudly at startup
 // instead of halfway through a run with a confusing error.
 import { readFileSync, existsSync } from 'node:fs';

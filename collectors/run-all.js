@@ -1,3 +1,4 @@
+import '../worker/eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // Runs every source for every profile. Each one is isolated: if one source fails,
 // the others still land, and the failure is reported by name rather than hidden.
 import { db } from '../worker/db.js';

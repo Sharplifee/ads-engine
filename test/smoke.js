@@ -1,3 +1,4 @@
+import '../worker/eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // Runs with no keys and no network: proves the logic is sound before anything is live.
 import { evaluate, funnelBreak, stats } from '../worker/rules.js';
 import { affordableCostPerResult } from '../worker/baselines.js';

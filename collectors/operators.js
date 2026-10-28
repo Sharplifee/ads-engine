@@ -1,3 +1,4 @@
+import '../worker/eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // SOURCE 3 — what operators are saying. Fully self-contained: the engine finds the
 // videos, podcasts and articles itself, stores them in its own library, and turns
 // each one into specific testable claims. No other project is involved.

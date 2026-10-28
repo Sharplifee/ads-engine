@@ -1,3 +1,4 @@
+import '../worker/eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // THE OUTPUT — everything the engine knows, turned into a campaign someone could run.
 // Structure, budgets, audiences, geography, formats, angles, hooks, written copy,
 // asset specs, test order and the thresholds that govern it. Nothing is published.

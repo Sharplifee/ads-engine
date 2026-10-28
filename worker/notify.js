@@ -1,3 +1,4 @@
+import './eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // Alerts have to reach a human or they are not alerts. One webhook, any destination
 // (Slack, Discord, a phone relay). Silent when no webhook is set — never a crash.
 import { db } from '../worker/db.js';

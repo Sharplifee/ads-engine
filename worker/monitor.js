@@ -1,3 +1,4 @@
+import './eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // Always-on monitor. Runs hourly. Reads Meta, writes snapshots, raises alerts,
 // proposes actions. Only ever executes a pause, and only when the profile allows it.
 import { db } from '../worker/db.js';

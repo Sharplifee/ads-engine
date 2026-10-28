@@ -1,3 +1,4 @@
+import './eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // Plug in any account: read its own 12-month history, derive its thresholds, write the profile.
 import { db } from '../worker/db.js';
 import { pullLevel } from './meta.js';

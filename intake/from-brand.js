@@ -1,3 +1,4 @@
+import '../worker/eventlog.js';   // append-only event log: job start/end, every fetch, errors
 // THE FRONT DOOR — minimum information in, full profile out.
 // Give it a website (and optionally an ad account id). It reads the site, works out
 // what is sold, to whom, where, at what price, with what proof, and writes a profile
